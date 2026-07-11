@@ -138,10 +138,10 @@ DESPUES (seguro):
 
 | Variable | Valor | Descripcion |
 |----------|-------|-------------|
-| TELEGRAM_BOT_TOKEN | 8840403500:AAEq... | Token del bot de Telegram |
-| TELEGRAM_CHAT_ID | -5327203234 | ID del grupo de Telegram |
-| APP_SECRET | sitoc_2026_blindaje | Token secreto de autenticacion |
-| SPREADSHEET_ID | 1gdxPF7h7DZx8SX... | ID del Google Sheet |
+| TELEGRAM_BOT_TOKEN | *(guardado en Script Properties)* | Token del bot de Telegram |
+| TELEGRAM_CHAT_ID | *(guardado en Script Properties)* | ID del grupo de Telegram |
+| APP_SECRET | *(guardado en Script Properties + app.js)* | Token secreto de autenticacion |
+| SPREADSHEET_ID | *(guardado en Script Properties)* | ID del Google Sheet |
 
 ### Flujo de autenticacion
 
@@ -269,7 +269,7 @@ DESPUES (seguro):
 
 ```json
 {
-  "secret": "sitoc_2026_blindaje",
+  "secret": "[TU_APP_SECRET]",
   "action": "sendAll",
   "data": {
     "nombreTecnico": "Juan Perez",
