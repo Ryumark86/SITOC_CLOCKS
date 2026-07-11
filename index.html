@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Clock In - SITOC</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="logo-sitoc.png" alt="SITOC" class="logo">
+            <p class="subtitle">Registro de Personal Operativo</p>
+        </header>
+        <form id="reportForm">
+            <div class="form-group">
+                <label for="nombre">Nombre del Técnico</label>
+                <input type="text" id="nombre" placeholder="Nombre completo" required autocomplete="name">
+            </div>
+
+            <div class="form-group">
+                <label for="cedula">Número de Cédula</label>
+                <input type="text" id="cedula" placeholder="Ej: 8-123-4567" required inputmode="numeric">
+            </div>
+
+            <div class="form-group">
+                <label for="cargo">Cargo</label>
+                <select id="cargo" required>
+                    <option value="">Seleccionar...</option>
+                    <option value="Supervisor">Supervisor</option>
+                    <option value="Team Leader">Team Leader</option>
+                    <option value="Técnico">Técnico</option>
+                    <option value="Comisionador">Comisionador</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="fecha">Fecha y Hora del Reporte</label>
+                <input type="datetime-local" id="fecha" readonly tabindex="-1">
+            </div>
+
+            <div class="form-group">
+                <label for="estado">Estado</label>
+                    <select id="estado" required>
+                        <option value="">Seleccionar...</option>
+                        <option value="De permiso">De permiso</option>
+                        <option value="En Ruta">En Ruta</option>
+                        <option value="Enfermo">Enfermo</option>
+                        <option value="Incapacitado">Incapacitado</option>
+                        <option value="Laborando">Laborando</option>
+                        <option value="Sin asignacion">Sin asignación</option>
+                        <option value="Sin permisos de ingreso">Sin permisos de ingreso</option>
+                        <option value="Stand By">Stand By</option>
+                        <option value="Vacaciones">Vacaciones</option>
+                    </select>
+            </div>
+
+            <div class="form-group">
+                <label for="proyecto">Proyecto</label>
+                <input type="text" id="proyecto" placeholder="Nombre del proyecto" required>
+            </div>
+
+            <div class="form-group">
+                <label for="estacion">Estación / Lugar</label>
+                <input type="text" id="estacion" placeholder="Ej: Estación Central, Oficina Matriz..." required>
+            </div>
+
+            <div class="form-group">
+                <div class="gps-status" id="gpsStatus">
+                    <span class="gps-icon">📍</span>
+                    <span class="gps-text" id="gpsText">Obteniendo ubicación...</span>
+                </div>
+            </div>
+
+            <div class="form-group hidden" id="ausencia-group">
+                <label for="finAusencia">Fecha de Fin de Ausencia</label>
+                <input type="date" id="finAusencia">
+            </div>
+
+            <div class="form-group hidden" id="motivo-group">
+                <label for="motivo">Motivo de Stand By</label>
+                <textarea id="motivo" rows="3" placeholder="Describa el motivo..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="foto">Foto del Reporte</label>
+                <div class="photo-input" id="photoArea">
+                    <input type="file" id="foto" accept="image/*" capture="environment">
+                    <div class="photo-placeholder" id="photoPlaceholder">
+                        <span class="photo-icon">📷</span>
+                        <span class="photo-text">Tomar o seleccionar foto</span>
+                    </div>
+                </div>
+                <div class="photo-preview hidden" id="photoPreview">
+                    <img id="photoPreviewImg" alt="Vista previa">
+                    <button type="button" id="btnRemovePhoto" class="btn-small">Quitar foto</button>
+                </div>
+            </div>
+
+            <button type="submit" id="btnSubmit">Generar Reporte</button>
+
+            <div class="history-bar" id="historyBar">
+                <span id="historyCount">0 reportes registrados</span>
+                <button type="button" id="btnDownloadHistory" class="btn-history">📥 Descargar Historial Completo (.xlsx)</button>
+                <button type="button" id="btnClearHistory" class="btn-history-danger">🗑️ Limpiar Historial</button>
+            </div>
+
+            <div class="pending-bar hidden" id="pendingBar">
+                <span class="pending-icon">📤</span>
+                <span id="pendingCount">0 envíos pendientes</span>
+                <button type="button" id="btnRetryPending" class="btn-pending">Reintentar ahora</button>
+                <button type="button" id="btnViewPending" class="btn-pending-secondary">Ver</button>
+            </div>
+            <div class="pending-list hidden" id="pendingList"></div>
+
+            <div id="toast" class="toast hidden"></div>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>if(typeof JSZip==='undefined'){document.write('<script src="jszip.min.js"><\/script>')}</script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <script>if(typeof XLSX==='undefined'){document.write('<script src="xlsx.full.min.js"><\/script>')}</script>
+    <script src="app.js"></script>
+</body>
+</html>
