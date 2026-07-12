@@ -165,3 +165,67 @@ SITOC_CLOCKS/
 - Canvas 2D para marca de agua
 - localStorage para persistencia
 - IIFE para aislamiento
+
+---
+
+## HISTORIAL DE SESIONES
+
+### Sesion 1 (11 julio 2026): Blindaje de seguridad + ReconexGoogle Sheet
+
+**Objetivo:** Hacer segura la app eliminando credenciales del frontend y reconectando a un Google Sheet nuevo.
+
+**Cambios realizados:**
+1. Creado `google-apps-script.gs` - proxy completo (Telegram + Sheet)
+2. Modificado `index.html` - campo Proyecto agregado despues de Estado
+3. Modificado `app.js`:
+   - Eliminadas credenciales (BOT_TOKEN, CHAT_ID, TELEGRAM_BASE, GOOGLE_SHEET_URL, GOOGLE_SHEET_TOKEN)
+   - Agregadas variables PROXY_URL y APP_SECRET
+   - Creada funcion sendToProxy()
+   - Reemplazadas funciones de Telegram (sendTelegramMessage, sendTelegramJson, sendTelegramXlsx) por una sola llamada al proxy
+   - Simplificada cola offline (de 4 flags a 1 solo sentOk)
+   - Agregado campo Proyecto en: buildReportData, validate, buildTextMessage, generateExcelArray, generateMasterExcel
+4. Actualizado `Agent.md` con nueva arquitectura
+5. Creado `DOCUMENTACION_SITOC.md` con documentacion completa
+6. Creado `.gitignore`
+7. Subido todo a GitHub: https://github.com/Ryumark86/SITOC_CLOCKS
+
+**Google Sheet nuevo:**
+- URL: https://docs.google.com/spreadsheets/d/1gdxPF7h7DZx8SXuv-wLLOHFfrTrCXhSPd1bXzRF0pbQ/edit
+- Spreadsheet ID: 1gdxPF7h7DZx8SXuv-wLLOHFfrTrCXhSPd1bXzRF0pbQ
+- Encabezados: Nombre del Tecnico | Cedula | Cargo | Fecha del Reporte | Estado | Proyecto | Estacion / Lugar | Latitud | Longitud | Fin de Ausencia | Motivo Stand By
+
+**Google Apps Script:**
+- Proyecto: SITOC-Proxy
+- Deploy URL: https://script.google.com/macros/s/AKfycbxRjR4_zgkTBnLIJiuMoT9eegt1P6rRhPwsnk4VSZszUHda7kTIJGgsZs3q9fONIQAFWg/exec
+- Credenciales en Script Properties (no en codigo)
+
+**Telegram:**
+- Bot: mismo bot anterior (8840403500:AAEq...)
+- Chat ID: -5327203234
+
+**GitHub:**
+- Repo: https://github.com/Ryumark86/SITOC_CLOCKS
+- Pages: https://ryumark86.github.io/SITOC_CLOCKS/
+- Deploy automatico via GitHub Actions
+
+**Estado actual:** Todo funcionando. Probado y verificado (Sheet + Telegram OK).
+
+### Pendiente para proxima sesion:
+
+**Conexion de API externa para datos de proyecto:**
+- El usuario quiere conectar una API de otro programa para traer tipo y nombre de proyecto
+- Aun no ha especificado que API es
+- La conexion debe hacerse a traves del proxy (Google Apps Script) para mantener la seguridad
+- Plan: el frontend envia un ID de proyecto al proxy, el proxy consulta la API externa y retorna solo tipo y nombre
+
+**Preguntas pendientes para el usuario:**
+1. Que API externa es? (nombre, URL)
+2. Como se autentica? (API key, token, OAuth)
+3. Que datos exactos retorna?
+4. Como se selecciona el proyecto en la interfaz? (manual, lista, busqueda)
+
+**Credenciales del usuario:**
+- Archivo CREDENCIALES_SEGURAS.txt creado (en .gitignore, NO subido a GitHub)
+- El usuario debe copiar los datos a un lugar seguro y borrar el archivo
+
+---
